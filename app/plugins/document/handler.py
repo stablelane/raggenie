@@ -7,6 +7,7 @@ from app.base.plugin_metadata_mixin import PluginMetadataMixin
 from app.base.document_data_plugin import DocumentDataPlugin
 from typing import  Tuple, Optional
 from app.readers.base_reader import BaseReader
+import os
 
 
 class Document(BasePlugin, PluginMetadataMixin,DocumentDataPlugin,  Formatter):
@@ -45,10 +46,31 @@ class Document(BasePlugin, PluginMetadataMixin,DocumentDataPlugin,  Formatter):
         logger.info("health check for documentations")
 
         try:
-            data = self.fetch_data(params=None)
+            data = []
+            for file_info in self.params.get("document_files", []):
+                file_path = file_info.get("file_path")
+                if not file_path:
+                    logger.error("File path is missing in the document file information.")
+                    continue
+
+                # Check if it's a URL or a local file
+                if file_path.startswith("http://") or file_path.startswith("https://"):
+                    try:
+                        response = requests.head(file_path, allow_redirects=True, timeout=5)
+                        if response.status_code >= 400:
+                            logger.error(f"URL not accessible: {file_path}")
+                        else:
+                            data.append(file_path)
+                    except Exception as e:
+                        logger.error(f"Error accessing URL {file_path}: {e}")
+                else:
+                    if os.path.exists(file_path):
+                        data.append(file_path)
+                    else:
+                        logger.error(f"Local file does not exist: {file_path}")
             if not data:
                 raise ValueError("No data fetched during health check")
-            logger.info("Checking documentation")
+            
             return True, None
         except Exception as e:
             logger.exception(f"Exception during fetching data: {str(e)}")

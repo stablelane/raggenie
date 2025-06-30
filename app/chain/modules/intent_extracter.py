@@ -151,7 +151,7 @@ class IntentExtracter(AbstractHandler):
         response["intent_extractor"] = parse_llm_response(output['content'])
             
         response["rag_filters"] = {
-            "datasources" : [response["intent_extractor"]['intent']] if 'intent_extractor' in response else [],
+            "datasources" : response.get('intent_extractor', {}).get('intent', ''),
             "document_count" : 5,
             "schema_count" : 5
         }
