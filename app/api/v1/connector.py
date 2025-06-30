@@ -20,6 +20,7 @@ import app.api.v1.commons as commons
 from loguru import logger
 from app.providers.config import configs
 from app.providers.middleware import verify_token
+import copy
 
 
 router = APIRouter()
@@ -562,7 +563,7 @@ def create_yaml(request: Request, config_id: int, db: Session = Depends(get_db),
 
     configs.inference_llm_model=inference_config[0]["unique_name"]
 
-    config = request.app.config
+    config = copy.deepcopy(request.app.config)
     vector_store, is_error = provider_svc.create_vectorstore_instance(db, config_id)
     if vector_store:
         vector_store.connect()
