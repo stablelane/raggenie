@@ -33,6 +33,7 @@ const DashboardBody = ({urlPrex = "/preview", title = "Dashboard",options=[], se
                                     onChange={(value) => { setSelectedOption(value); onCreateNewChat()}}
                                     noMargin={true}
                                     placeholder={'Configuration'}
+                                    isSearchable={false}
                                 />
                             </div>
                         ) : ( 
