@@ -1,6 +1,5 @@
 from app.readers.docs_reader import DocsReader
 from loguru import logger
-import fitz
 from docling.document_converter import DocumentConverter
 
 
