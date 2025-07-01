@@ -5,7 +5,7 @@ from app.models.request import ConnectionArgument
 # Plugin Metadata
 __version__ = '1.0.0'
 __plugin_name__ = 'document'
-__display_name__ = 'document loader'
+__display_name__ = 'Document Loader'
 __description__ = 'document integration for handling document data'
 __icon__ = '/assets/plugins/logos/document.svg'
 __category__ = 4
