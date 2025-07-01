@@ -5,7 +5,7 @@ from app.models.request import ConnectionArgument
 # Plugin Metadata
 __version__ = '1.0.0'
 __plugin_name__ = 'website'
-__display_name__ = 'Website loader'
+__display_name__ = 'Website Loader'
 __description__ = 'Website integration for handling website data'
 __icon__ = '/assets/plugins/logos/website.svg'
 __category__ = 1
