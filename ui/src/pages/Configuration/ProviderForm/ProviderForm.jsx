@@ -474,7 +474,7 @@ const onRemoveFile = (fileId) => {
                                 </div>
                                 <div>
                                 {disableConnectorSave && <Button style={{marginRight: "10px",display: (providerDetails.category_id === 4 || providerDetails.category_id === 5) ? "none" : ""}} className="icon-button" disabled={Object.keys(errors).length > 0 ? true : false} onClick={onTestConnection}>  Connection Test <RiPlugLine/></Button>}
-                                    <Button buttonType="submit" className="icon-button" disabled={disableConnectorSave} >  Save & Continue <FaRegArrowAltCircleRight/></Button>
+                                    <Button buttonType="submit" className="icon-button" disabled={(providerDetails.category_id === 4 || providerDetails.category_id === 5) ? false : disableConnectorSave} >  Save & Continue <FaRegArrowAltCircleRight/></Button>
                                 </div>
                             </div>
                         </form>
