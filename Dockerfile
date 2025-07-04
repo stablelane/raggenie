@@ -40,7 +40,7 @@ FROM python:3.11 AS deployer
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-RUN apt-get update && apt-get install -y unixodbc-dev
+RUN apt-get update && apt-get install -y unixodbc-dev && apt-get install -y libgl1
 
 
 # Set the working directory
