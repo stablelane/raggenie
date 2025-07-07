@@ -17,7 +17,7 @@ class ChromaDataBase(BaseVectorDB):
         self.client = None
         self.embedding_function = None
         self.params = {
-            'path': path,
+            'path': f"./chromadb/{path}",
             'settings': Settings(allow_reset=True),
         }
         self.embeddings = embeddings
