@@ -52,10 +52,10 @@ class GeneralAnswerGenerator(AbstractHandler):
                         prompt, contexts
                 )
                 if output["error"] is not None:
-                        return await Formatter.format("Oops! Something went wrong. Try Again!",output['error'])
+                        return Formatter.format("Oops! Something went wrong. Try Again!",output['error'])
 
                 response["inference"] = markdown_parse_llm_response(output['content'])
                 if not response["inference"]:
-                        return await Formatter.format("Oops! Something went wrong. Try Again!","")
+                        return Formatter.format("Oops! Something went wrong. Try Again!","")
 
                 return await super().handle(response)

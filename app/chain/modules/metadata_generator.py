@@ -70,7 +70,7 @@ class MetadataGenerator(AbstractHandler):
                             prompt, chat_history
                     )
         if output["error"] is not None:
-            return await Formatter.format("Oops! Something went wrong. Try Again!",output['error'])
+            return Formatter.format("Oops! Something went wrong. Try Again!",output['error'])
 
         response["inference"] = markdown_parse_llm_response(output['content'])
 

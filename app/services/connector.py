@@ -772,6 +772,7 @@ def update_datasource_documentations(db: Session, vector_store, datasources, id_
         logger.info("Updating datasource documentations")
         repo.update_configuration_status(config_id, 1, db)
         active_datsources = {}
+        vector_store.clear_collection(config_id)
         for key, datasource in datasources.items():
             connector_details = id_name_mappings.get(key, {})
             if "id" not in connector_details:
@@ -808,12 +809,10 @@ def update_datasource_documentations(db: Session, vector_store, datasources, id_
                         sd = SourceDocuments([], [], documentations)
 
                 chunked_document, chunked_schema = sd.get_source_documents()
-                vector_store.clear_collection(config_id)
                 vector_store.prepare_data(key, chunked_document,chunked_schema, queries, int(config_id))
-                repo.update_configuration_status(config_id, 2, db)
-
-
-
+        
+        
+        repo.update_configuration_status(config_id, 2, db)
         return active_datsources, None
 
 def get_inference_and_plugin_configurations(db: Session, config_id: int):
