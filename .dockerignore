@@ -1,5 +1,4 @@
-./ui
-./github
+.github
 .gitignore
 poetry.lock
 README.md
