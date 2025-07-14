@@ -148,6 +148,7 @@ class AltasMongoDB(BaseVectorDB):
         logger.info(f"datasources:{datasource}")
         logger.info(f"collection:{collection}")
         logger.info(f"index_name:{index_name}")
+        logger.info(f"query, count, index_name {query, count, index_name}")
 
 
         res = collection.aggregate([
@@ -157,7 +158,7 @@ class AltasMongoDB(BaseVectorDB):
                     "index": index_name,
                     "path": self.EMBEDDING_FIELD_NAME,
                     "queryVector": self.generate_embedding(query),
-                    "numCandidates": 50,
+                    "numCandidates": 100,
                     "limit": count,
 
                 }
@@ -180,6 +181,8 @@ class AltasMongoDB(BaseVectorDB):
         results = list(res)
         for result in results:
             result['distances'] = 1 - result['score']
+            
+        logger.info(f"retrieved results {results}")
         return results
 
     async def find_similar_schema(self, datasource, query,count):
