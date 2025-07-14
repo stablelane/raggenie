@@ -126,9 +126,14 @@ class IntentExtracter(AbstractHandler):
 
 
         capability_list = "|".join(capability_names)
+        
+        question_text = (
+            request.get('translated_text') if request.get('lang') != 'en'
+            else request.get('question')
+        )
 
         prompt = Template(prompt).safe_substitute(
-            question = request["question"],
+            question = question_text,
             long_description = long_description,
             short_description =short_description,
             capability_list = capability_list,

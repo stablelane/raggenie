@@ -69,6 +69,11 @@ class PromptGenerator(AbstractHandler):
 
         context = data_source.__prompt__
         prompt = context.base_prompt
+        
+        question_text = (
+            request.get('translated_text') if request.get('lang') != 'en'
+            else request.get('question')
+        )
 
 
         system_prompt = ""
