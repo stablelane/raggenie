@@ -57,6 +57,5 @@ class InputFormatter(AbstractHandler):
         else:
             request['lang'] = 'en'
         
-        print(f'current request {request}')
         response = request
         return await super().handle(response)
