@@ -49,7 +49,7 @@ __prompt__ = Prompt(**{
             Generate a JSON response in the following format without any formatting:
             {
                 "explanation": "Explain how you determined the answer using the provided context",
-                "general_message": "Answer in Markdown format to user question based on the context with all the details, striclty in the language of the user question"
+                "general_message": "Answer in Markdown format to user question based on the context with all the details striclty in the language of the user question"
             }
             """
         },
