@@ -15,14 +15,12 @@ services:
       retries: 3                                    # Retry 3 times before considering the container unhealthy
       timeout: 10s                                  # Timeout for each check
       start_period: 10s 
-    # depends_on:
-    #   zitadel:
-    #     condition: service_healthy
-      # backend:
-      #   condition: service_healthy
-     
-    # networks:
-    #   - app_network
+    depends_on:
+      zitadel:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+        
 
   db:
     image: postgres:16-alpine
@@ -37,9 +35,7 @@ services:
       start_period: 20s
     volumes:
       - ./pgdata:/var/lib/postgresql/data
-    
-    # networks:
-    #   - app_network
+
 
   zitadel:
     user: "${UID:-1000}"
@@ -68,8 +64,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      # nginx:
-      #   condition: service_healthy
     volumes:
       - ./machinekey:/machinekey
     healthcheck:
@@ -78,8 +72,6 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
-    # networks:
-    #   - app_network
 
   backend:
     build:
@@ -99,25 +91,6 @@ services:
       - APP_SERVER=http://app.raggenie.com
       - CLIENT_PRIVATE_KEY_FILE_PATH=machinekey/zitadel-admin-sa.json
     command: 'python3 main.py --config ./config.yaml llm'
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
-    #   zitadel:
-    #     condition: service_healthy
-    # networks:
-    #   - app_network
-
-
-
-  # ubuntu-service:
-  #   image: ubuntu:latest
-  #   container_name: ubuntu-container
-  #   stdin_open: true       # Keeps the container open for interactive input
-  #   tty: true              # Allocates a pseudo-TTY
-  #   command: /bin/bash 
-    # networks:
-    #   - app_network
-
-# networks:
-#   app_network:
-#     driver: bridge
+    depends_on:
+      zitadel:
+        condition: service_healthy
