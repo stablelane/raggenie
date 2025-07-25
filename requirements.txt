@@ -81,7 +81,7 @@ mysql-connector-python==9.0.0
 nest-asyncio==1.6.0
 numpy==1.26.4
 oauthlib==3.2.2
-onnxruntime==1.19.2
+onnxruntime==1.20.0
 openpyxl==3.1.5
 oracledb==2.4.1
 orjson==3.10.7
@@ -100,8 +100,6 @@ pydantic-settings==2.5.2
 pydantic_core==2.23.3
 Pygments==2.18.0
 PyJWT==2.9.0
-PyMuPDF==1.24.10
-PyMuPDFb==1.24.10
 PyMySQL==1.1.1
 pyodbc==5.2.0
 PyPika==0.48.9
@@ -166,3 +164,6 @@ flake8==7.1.1
 pep8-naming==0.14.1
 uvloop==0.20.0; sys_platform != 'win32'
 Jinja2==3.1.4
+docling==2.39.0
+mariadb==1.1.12
+rapidocr_onnxruntime==1.4.4

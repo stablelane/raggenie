@@ -1,4 +1,3 @@
-./ui
 ./github
 .gitignore
 poetry.lock
@@ -13,3 +12,4 @@ Makefile
 .pre-commit-config.yaml
 .env.example
 ui/node_modules
+pgdata

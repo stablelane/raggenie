@@ -1,10 +1,7 @@
 import pymongo
 from loguru import logger
 from app.base.base_vectordb import BaseVectorDB
-import urllib.parse
 import certifi
-from app.providers.config import configs
-
 
 
 class AltasMongoDB(BaseVectorDB):
@@ -167,7 +164,7 @@ class AltasMongoDB(BaseVectorDB):
             },
             {
             '$match': {
-                'metadatas.datasource': datasource[0]  # Filter for the specified datasource
+                'metadatas.datasource': datasource  # Filter for the specified datasource
             }
             },
             {
