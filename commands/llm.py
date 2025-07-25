@@ -4,7 +4,6 @@ from loguru import logger
 from app.providers.config import configs
 from app.main import create_app
 import uvicorn
-from app.providers.config import configs
 import sys
 
 
