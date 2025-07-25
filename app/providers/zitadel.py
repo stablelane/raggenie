@@ -1,8 +1,6 @@
 import json
 import requests
 import time
-import app.schemas.user as schemas
-import app.repository.user as repo
 from app.providers.config import configs
 from app.schemas.common import CommonResponse
 from fastapi.responses import JSONResponse, RedirectResponse

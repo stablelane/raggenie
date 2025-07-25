@@ -1,7 +1,6 @@
 import click
 from loguru import logger
 from app.utils.read_config import read_yaml_file
-from app.providers.config import configs
 import sys
 
 @click.group()

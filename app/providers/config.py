@@ -25,11 +25,7 @@ class Configs(BaseSettings):
     inference_llm_model:str = os.getenv("INFERENCE_LLM_MODEL", "gpt")
 
     # Auth
-    auth_server: str = os.getenv("AUTH_SERVER", "0.0.0.0")
-    username: str = os.getenv("ADMIN_USERNAME","admin")
-    password: str = os.getenv("ADMIN_PASSWORD","password")
-    secret_key: str = os.getenv("SECRET_KEY","secret")
-    auth_enabled: bool = os.getenv("AUTH_ENABLED",True)
+    auth_enabled: bool = os.getenv("AUTH_ENABLED",False)
     default_username: str = os.getenv("DEFAULT_USERNAME", "Admin")
     
     client_private_key_file_path: str = os.getenv("CLIENT_PRIVATE_KEY_FILE_PATH", "app/providers/client-key-file.json")

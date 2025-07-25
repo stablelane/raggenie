@@ -1,16 +1,12 @@
 import json
 import requests
 from app.schemas.common import LoginData
-import os
 from fastapi import APIRouter, Depends, Response, Request, HTTPException, status
 from fastapi.responses import RedirectResponse, JSONResponse
 from app.providers.config import configs
 from app.providers.zitadel import Zitadel
-from app.utils.jwt import JWTUtils
 from app.schemas.common import CommonResponse
 from app.providers.middleware import verify_token
-from typing import Optional
-from app.providers.config import configs
 import app.services.user as svc
 import app.schemas.user as schemas
 from app.utils.database import get_db
