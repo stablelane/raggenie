@@ -23,39 +23,6 @@ function ChatBot({ apiURL, configID, uiSize }) {
   }
 
   let contextId = localStorage.getItem('contextId');
-  useEffect(() => {
-    if (!contextId) {
-      contextId = uuidv4();
-      localStorage.setItem('contextId', contextId);
-    } else {
-      getChatByContext(contextId, apiURL)
-        .then(response => {
-          const chats = response.data.data.chats;
-
-          const newMessages = chats.flatMap(chat => {
-            const chatData = {
-              chart: {
-                data: chat.chat_answer.data,
-                title: chat.chat_answer.title,
-                xAxis: chat.chat_answer.x,
-                yAxis: chat.chat_answer.y,
-              },
-              query: chat.chat_answer.query,
-            };
-
-            return [
-              { sender: 'user', message: chat.chat_query },
-              { sender: 'bot', message: chat.chat_answer.content, entity: chat.chat_answer.main_entity, format: chat.chat_answer.main_format, kind: chat.chat_answer.kind, data: chatData },
-            ];
-          });
-
-          setMessages(newMessages);
-          scrollToLastMessage(2000);
-        }).catch(error => {
-          console.log(error, "error")
-        })
-    }
-  }, []);  /* runs only on mount  */
 
   const fetchAndRender = async (message) => {
     try {
@@ -65,10 +32,19 @@ function ChatBot({ apiURL, configID, uiSize }) {
       
       const response = await chatBotAPI(contextId, configID, apiURL, message);
       const res = response.data;
+      const chatData = {
+        chart: {
+          data: res.response.data,
+          title: res.response.title,
+          xAxis: res.response.x,
+          yAxis: res.response.y,
+        },
+        query: res.response.query,
+      };
       
       setMessages((prevMessages) => [
         ...prevMessages,
-        { sender: 'bot', message: res.response.content, entity: res.response.main_entity, format: res.response.main_format, kind: res.response.kind, data: res.response },
+        { sender: 'bot', message: res.response.content, entity: res.response.main_entity, format: res.response.main_format, kind: res.response.kind, data: chatData },
       ]);
       
       scrollToLastMessage(0); 
@@ -83,88 +59,6 @@ function ChatBot({ apiURL, configID, uiSize }) {
       setLoading(false);
     }
   };
-  
-
-  return (
-    <div>
-      {/* Chatbox Icon */}
-      <button className={`float-button large ${isOpen ? 'open' : ''}`} onClick={toggleChatbox}>
-        <img src={arrowImage} className='button-icon'></img>
-      </button>
-
-      {/* Chatbox Window */}
-      {isOpen && (
-        <div className={`chat-box ${uiSize === 'large' ? 'large' : ''}`}>
-          <div className="chat-header">
-            <img src={arrowImage} onClick={toggleChatbox} className='min-btn'></img>
-            <img src={uiSize === 'large' ? largeLogo : logoImage}></img>
-            <span className='header-text'>Assistant</span>
-          </div>
-
-          <div className={`chat-body ${uiSize === 'large' ? 'large' : ''}`}>
-            <div className='message-wrapper'>
-              {messages.map((message, index) => {
-                if (message.sender === 'user') {
-                  return (
-                    <>
-                      <div className='user-message'>{message.message}</div>
-                      <div className='bot-message'>{loading && index === messages.length - 1 && <Loader />}</div>
-                    </>
-                  )
-                } else if (message.sender === 'bot') {
-                  return (
-                    <>
-                      <div className='bot-message'>
-                        <img src={botdpImage} alt='bot avatar'></img>
-                        {/* {message.message} */}
-                        <Message message={message} />
-                      </div>
-                    </>)
-                }
-              })}
-            </div>
-
-
-          </div>
-
-          <div className={`input-div ${uiSize === 'large' ? 'large' : ''}`}>
-            <div
-              className="chat-input"
-              contentEditable="true"
-              placeholder="Type a reply..."
-              suppressContentEditableWarning={true}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  // console.log(e.target.textContent)
-                  const chatInput = e.target.textContent.trim();
-                  if (chatInput) fetchAndRender(chatInput)
-                  e.target.textContent = ''; // Clear input
-                }
-              }}
-              onInput={(e) => {
-                if (e.target.textContent.trim() === '') {
-                  e.target.innerHTML = '';
-                }
-              }}
-            >
-            </div>
-            <button
-              className='chat-button'
-              onClick={() => {
-                const chatInput = document.querySelector('.chat-input').textContent.trim();
-                if (chatInput) fetchAndRender(chatInput);
-                document.querySelector('.chat-input').textContent = '';
-              }}
-            >
-              <img src={sendImage}></img>
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
 
 function scrollToLastMessage(delay) {
   setTimeout(() => {
@@ -174,5 +68,120 @@ function scrollToLastMessage(delay) {
   }, delay);
 }
 
+useEffect(() => {
+  if (!contextId) {
+    contextId = uuidv4();
+    localStorage.setItem('contextId', contextId);
+  } else {
+    getChatByContext(contextId, apiURL)
+      .then(response => {
+        const chats = response.data.data.chats;
+
+        const newMessages = chats.flatMap(chat => {
+          const chatData = {
+            chart: {
+              data: chat.chat_answer.data,
+              title: chat.chat_answer.title,
+              xAxis: chat.chat_answer.x,
+              yAxis: chat.chat_answer.y,
+            },
+            query: chat.chat_answer.query,
+          };
+
+          return [
+            { sender: 'user', message: chat.chat_query },
+            { sender: 'bot', message: chat.chat_answer.content, entity: chat.chat_answer.main_entity, format: chat.chat_answer.main_format, kind: chat.chat_answer.kind, data: chatData },
+          ];
+        });
+
+        setMessages(newMessages);
+        scrollToLastMessage(2000);
+      }).catch(error => {
+        console.log(error, "error")
+      })
+  }
+}, []);  /* runs only on mount  */
+  
+
+return (
+  <div>
+    {/* Chatbox Icon */}
+    <button className={`float-button large ${isOpen ? 'open' : ''}`} onClick={toggleChatbox}>
+      <img src={arrowImage} className='button-icon'></img>
+    </button>
+
+    {/* Chatbox Window */}
+    {isOpen && (
+      <div className={`chat-box ${uiSize === 'large' ? 'large' : ''}`}>
+        <div className="chat-header">
+          <img src={arrowImage} onClick={toggleChatbox} className='min-btn'></img>
+          <img src={uiSize === 'large' ? largeLogo : logoImage}></img>
+          <span className='header-text'>Assistant</span>
+        </div>
+
+        <div className={`chat-body ${uiSize === 'large' ? 'large' : ''}`}>
+          <div className='message-wrapper'>
+            {messages.map((message, index) => {
+              if (message.sender === 'user') {
+                return (
+                  <>
+                    <div className='user-message'>{message.message}</div>
+                    <div className='bot-message'>{loading && index === messages.length - 1 && <Loader />}</div>
+                  </>
+                )
+              } else if (message.sender === 'bot') {
+                return (
+                  <>
+                    <div className='bot-message'>
+                      <img src={botdpImage} alt='bot avatar'></img>
+                      {/* {message.message} */}
+                      <Message message={message} />
+                    </div>
+                  </>)
+              }
+            })}
+          </div>
+
+
+        </div>
+
+        <div className={`input-div ${uiSize === 'large' ? 'large' : ''}`}>
+          <div
+            className="chat-input"
+            contentEditable="true"
+            placeholder="Type a reply..."
+            suppressContentEditableWarning={true}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                // console.log(e.target.textContent)
+                const chatInput = e.target.textContent.trim();
+                if (chatInput) fetchAndRender(chatInput)
+                e.target.textContent = ''; // Clear input
+              }
+            }}
+            onInput={(e) => {
+              if (e.target.textContent.trim() === '') {
+                e.target.innerHTML = '';
+              }
+            }}
+          >
+          </div>
+          <button
+            className='chat-button'
+            onClick={() => {
+              const chatInput = document.querySelector('.chat-input').textContent.trim();
+              if (chatInput) fetchAndRender(chatInput);
+              document.querySelector('.chat-input').textContent = '';
+            }}
+          >
+            <img src={sendImage}></img>
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+)
+}
 
 export default ChatBot
