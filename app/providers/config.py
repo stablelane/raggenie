@@ -37,6 +37,20 @@ class Configs(BaseSettings):
     
     # Cache
     config_cache_limit: int = os.getenv("CONFIG_CACHE_LIMIT", 10)
+    
+    # pdf parse engine
+    pdf_parse_engine: str = os.getenv("PDF_PARSE_ENGINE", 'azure')
+    
+    # Azure Document Intelligence
+    azure_di_enpoint: str = os.getenv("AZURE_DI_ENDPOINT", "https://di-rga-dev-uaenorth-001.cognitiveservices.azure.com/")
+    azure_di_secret_key: str = os.getenv("AZURE_DI_SECRET_KEY", "")
+    
+    # Azure Translator
+    azure_ts_enpoint: str = os.getenv("AZURE_TS_ENDPOINT", "https://api.cognitive.microsofttranslator.com")
+    azure_ts_secret_key: str = os.getenv("AZURE_TS_SECRET_KEY", "")
+    azure_ts_region: str = os.getenv("AZURE_TS_REGION", "uaenorth")
+
+    
 
 
 configs = Configs()

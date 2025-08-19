@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from app.providers.document_parser.loader import ParserEngineLoader
 import app.repository.connector as repo
 import app.repository.provider as config_repo
 import app.schemas.connector as schemas
@@ -12,6 +13,7 @@ from app.services.connector_details import get_plugin_metadata
 from fastapi import Request
 from app.providers.data_preperation import SourceDocuments
 from app.loaders.base_loader import BaseLoader
+from app.providers.config import configs
 
 
 
@@ -805,7 +807,10 @@ def update_datasource_documentations(db: Session, vector_store, datasources, id_
                         sd = SourceDocuments(schema_details, schema_config, [])
                         queries = get_all_connector_samples(connector_details.get("id"), db)
                     case 4:
-                        documentations = datasource.fetch_data()
+                        loader = ParserEngineLoader()
+                        engine = loader.load_engine(configs.pdf_parse_engine)
+                        
+                        documentations = datasource.fetch_data(engine)
                         sd = SourceDocuments([], [], documentations)
 
                 chunked_document, chunked_schema = sd.get_source_documents()

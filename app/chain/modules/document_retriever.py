@@ -23,7 +23,7 @@ class DocumentRetriever(AbstractHandler):
         """
 
         self.store =store
-        self.context_relevance_threshold = 4
+        self.context_relevance_threshold = 0.4
         self.datasources = datasources
 
 
@@ -45,7 +45,7 @@ class DocumentRetriever(AbstractHandler):
             else request.get('question')
         )
         tasks = [
-                self.store.find_similar_documentation(datasource, question_text, 10)
+                self.store.find_similar_documentation(datasource, question_text, 20)
                 for datasource in self.datasources
             ]
         results = await asyncio.gather(*tasks)

@@ -22,7 +22,7 @@ const PreviewChatBox = ({urlPrex = "/preview", selectedOption, setSelectedOption
     const [chatHistory,setchatHistory] = useState([])
     const [currentChat, setCurrentChat] = useState({})
     const [isChatLoading, setIsChatLoading] = useState(false) 
-    const [enableChatbox, setEnableChatbox] = useState(false)
+    const [enableChatbox, setEnableChatbox] = useState(true)
     const [currentState, setCurrentState] = useState(1)
     // currentState Values
     // 1. to add plungs
