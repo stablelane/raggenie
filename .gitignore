@@ -59,6 +59,7 @@ venv.bak/
 
 # Default vector db path
 vector_db
+chromadb
 
 #assets files
 assets/datasource
@@ -75,3 +76,8 @@ csv_db.sqlite
 # node_modules folder
 ui/node_modules
 ui/dist-library
+
+#zitadel
+pgdata
+machinekey
+

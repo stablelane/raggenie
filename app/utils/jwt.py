@@ -1,7 +1,6 @@
 import jwt
 from jwt import PyJWTError
 from datetime import datetime, timedelta
-from app.providers.config import configs
 
 class JWTUtils:
     def __init__(self, secret_key, algorithm="HS256"):
