@@ -54,6 +54,9 @@ class IntentExtracter(AbstractHandler):
         capabilities = use_case.get("capabilities", [])
         rag = request.get("rag", {})
         context = rag.get("context", {})
+        connector_name = request.get("connector_name", '')
+        
+        
 
         capability_description = ""
         capability_names = ["out_of_context"]
@@ -107,13 +110,10 @@ class IntentExtracter(AbstractHandler):
         out_of_context: If chat is irrelevant to chatbot context and its capabilities
         --- Intent section ---
 
-        Previous last message Intent : $previous_intent
 
         Instructions:
         1.Only one intent must be identified.Multiple intents are prohibited.
-        2.Pay special attention to whether the previous intent has been completed.
-        3.Strictly only if the current user query doesn't clearly match an intent, consider the previous messages to identify the most appropriate intent.
-        4.When asked to list possible questions, provide general examples without mentioning "specific" word
+        2.When asked to list possible questions, provide general examples without mentioning "specific" word
 
         Generate a response for the user query '$question' in the following JSON format:
 
@@ -131,6 +131,23 @@ class IntentExtracter(AbstractHandler):
             request.get('translated_text') if request.get('lang') != 'en'
             else request.get('question')
         )
+        
+        if connector_name:
+            logger.info(f"skipping intent extractor {connector_name}")
+            response["available_intents"] = capability_names
+
+            response["intent_extractor"] = { "explanation": "", "intent" : connector_name}
+                
+            response["rag_filters"] = {
+                "datasources" : connector_name,
+                "document_count" : 5,
+                "schema_count" : 5
+            }
+            
+            return await super().handle(response)
+            
+        
+        
 
         prompt = Template(prompt).safe_substitute(
             question = question_text,

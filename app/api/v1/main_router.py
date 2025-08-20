@@ -21,6 +21,7 @@ async def qna(
     request: Request,
     context_id: str = Query(..., alias="contextId"),
     config_id: str = Query(..., alias="configId"),
+    connector_name: str = Query(..., alias="connectorName"),
     env_id: str = Query(..., alias="envId"),
     db: Session = Depends(get_db)
 ):
@@ -38,7 +39,7 @@ async def qna(
         dict: Response containing the answer to the user's query and the original query text.
     """
     
-    logger.info(f"{context_id} - {config_id} - query: {query.content}")
+    logger.info(f"{context_id} - {config_id} - query: {query.content} - connector_name {connector_name}")
     cached_data = cache_manager.get(int(config_id))
     if not cached_data:
         logger.info("configuration was not found in the cache")
@@ -52,10 +53,12 @@ async def qna(
     vector_store = cached_data['vector_store']
     request.app.chain = chain
     request.app.vector_store = vector_store
+    connector_name = str(connector_name).replace(" ", "_").lower()
     
     out = await chain.invoke({
         "question": query.content,
         "context_id": context_id,
+        "connector_name": connector_name
     })
 
     resp = llmchat.create_chat(

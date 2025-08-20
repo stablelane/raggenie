@@ -849,5 +849,21 @@
     margin-top: 10px;
 }
 
+.MessageContainer table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.MessageContainer th,
+.MessageContainer td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.MessageContainer th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
 
 /* Error Message Style */

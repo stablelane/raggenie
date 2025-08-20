@@ -45,9 +45,10 @@ const ChatBox = forwardRef(({messageBoxRef = null, handleNavigateChatContext=()=
                     </div>
 
                     <div>
-                        <div className={style.ChatBoxTextContainer}>
-                            <div ref={messageBoxRef} className={style.ChatBoxTextBox} contentEditable="plaintext-only" onKeyDown={onKeyDown} onKeyUp={onKeyUp}>
-                            </div>
+                        <div className={style.ChatBoxTextContainer}> 
+                            <bdi style={{"flexGrow" : "1"}}>
+                                <div ref={messageBoxRef} className={style.ChatBoxTextBox} contentEditable="plaintext-only" onKeyDown={onKeyDown} onKeyUp={onKeyUp}/>
+                            </bdi>
                             <div>
                                 <div className={style.ChatBoxSendIcon} onClick={onSendClick}></div>
                             </div>

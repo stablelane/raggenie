@@ -7,11 +7,11 @@ import preview from "src/assets/icons/preview-arrow.svg"
 import { v4 } from 'uuid';
 
 
-const CopyURL = () => {
+const CopyURL = ({currentConfigID}) => {
 
-   
+    
     const CopyUrlRef = useRef(null)
-    const previewURL = `http://${window.location.host}/${v4()}/chat`
+    const previewURL = `http://${window.location.host}/ui/${v4()}/chat/${currentConfigID}`
     const handleCopyUrl=()=>{
        try {
             var copyText = CopyUrlRef.current.innerText;

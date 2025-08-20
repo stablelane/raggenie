@@ -5,7 +5,7 @@ const useAppSettings = create((set) => ({
   username: '',
   isAuthenticated: false,
   authEnabled: false,
-  envID: '',
+  envID: 0,
   setUsername: (username) => set({ username }),
   setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
   setAuthEnabled: (authEnabled)=>set({authEnabled}),

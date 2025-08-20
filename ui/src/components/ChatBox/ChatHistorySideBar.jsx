@@ -60,7 +60,7 @@ const resultArray = Object.values(formattedData);
           </div>)}
 
           <h3>Chat History</h3>
-          <button onClick={(e)=>{onCreateNewChat(e)}}>NewChat<span><img src={plusIcon} /></span></button>
+          <button onClick={(e)=>{onCreateNewChat(e)}}>New Chat<span><img src={plusIcon} /></span></button>
         </div>
         <div className={style.ChatHistoryContent}>
           <div className={style.RecentChat}>

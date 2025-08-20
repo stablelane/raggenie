@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Select from "src/components/Select/Select";
 import { useNavigate } from "react-router-dom";
 
-const DashboardBody = ({urlPrex = "/preview", title = "Dashboard",options=[], select, children, selectedOption, setSelectedOption, containerStyle = {}, containerClassName = ""}) => {
+const DashboardBody = ({urlPrex = "/preview", title = "Dashboard",options=[], select, children, selectedOption, setSelectedOption, connOptions, connSelectedOption, connSetSelectedOption, containerStyle = {}, containerClassName = ""}) => {
     
     const navigate = useNavigate()
     
@@ -26,6 +26,7 @@ const DashboardBody = ({urlPrex = "/preview", title = "Dashboard",options=[], se
                 <div className={style.DashboardHeader}>
                     <div className={style.DashboardTitleContainer}>
                         {select ? (
+                            <div style={{display: 'flex', gap: '10px'}}>
                             <div style={{width: '183px'}}>
                                 <Select
                                     options={options}
@@ -36,13 +37,24 @@ const DashboardBody = ({urlPrex = "/preview", title = "Dashboard",options=[], se
                                     isSearchable={false}
                                 />
                             </div>
+                            <div style={{width: '183px'}}>
+                                <Select
+                                    options={connOptions}
+                                    value={connSelectedOption}
+                                    onChange={(value) => { connSetSelectedOption(value)}}
+                                    noMargin={true}
+                                    placeholder={'Connectors'}
+                                    isSearchable={false}
+                                />
+                            </div>
+                            </div>
                         ) : ( 
                         <span className={style.DashboardTitle}>{title}</span> )}
                     </div>
                     <div>
                     </div>
                     <div>
-                        <a href="https://www.raggenie.com/" target="_blank"> <img className={style.DashboardHeaderIcon} src={help} /></a>
+                        <a href="https://www.rga.gov.sa/content/externalportal/en/home.html" target="_blank"> <img className={style.DashboardHeaderIcon} src={help} /></a>
                     </div>
                 </div>
                 <div className={`dashboard-loader-container ${style.LoaderContainer}`}>

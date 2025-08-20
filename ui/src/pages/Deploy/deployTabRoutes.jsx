@@ -8,7 +8,7 @@ export const deployTabroutes = (currentConfigID) => [
     title: "Get URL for live preview",
     path: "/copyURL",
     icon: "",
-    page: <CopyURL />,
+    page: <CopyURL currentConfigID={currentConfigID}/>,
     isPrivate: true,
   },
   {

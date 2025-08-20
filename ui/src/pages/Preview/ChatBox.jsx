@@ -14,10 +14,11 @@ import useAppSettings from "src/store/authStore";
 
 
 
-const PreviewChatBox = ({urlPrex = "/preview", selectedOption, setSelectedOption})=>{ 
+const PreviewChatBox = ({urlPrex = "/preview", selectedOption, setSelectedOption, connSelectedOption, connSetSelectedOption})=>{ 
     const { envID } = useAppSettings();
     const [feedbackStatus, setFeedbackStatus] = useState(false); // for dislike and like activation
     const [currentConfigID, setCurrentConfigID] = useState(0)
+    const [currentConnectorName, setCurrentConnectorName] = useState("")
     const [conversations, setConversation] = useState([])
     const [chatHistory,setchatHistory] = useState([])
     const [currentChat, setCurrentChat] = useState({})
@@ -30,7 +31,7 @@ const PreviewChatBox = ({urlPrex = "/preview", selectedOption, setSelectedOption
     // 3. restart bot
 
 
-    let { contextId } = useParams()
+    let { contextId, configurationID } = useParams()
     const navigate = useNavigate()
     const messageBoxRef = useRef(null)
 
@@ -42,7 +43,7 @@ const PreviewChatBox = ({urlPrex = "/preview", selectedOption, setSelectedOption
                 headers: {}
             }
             setIsChatLoading(true)
-            PostService(API_URL + `/query/query?contextId=${contextId}&configId=${currentConfigID}&envId=${envID}`,
+            PostService(API_URL + `/query/query?contextId=${contextId}&configId=${currentConfigID}&connectorName=${currentConnectorName}&envId=${envID}`,
                     { "content": message, "role":"user" }, {showLoader: false,allowAuthHeaders:true}, axiosConfig).then(response=>{
                        
                 let res = response.data
@@ -229,8 +230,21 @@ const PreviewChatBox = ({urlPrex = "/preview", selectedOption, setSelectedOption
     useEffect(() => {
         if (selectedOption?.value) {
             setCurrentConfigID(selectedOption.value);
+            connSetSelectedOption("")
         }
     }, [selectedOption])
+
+    useEffect(() => {
+        if (configurationID) {
+            setCurrentConfigID(Number(configurationID));
+        }
+    }, [configurationID]);
+
+    useEffect(() => {
+        if (connSelectedOption?.label) {
+            setCurrentConnectorName(connSelectedOption.value)
+        }
+    }, [connSelectedOption])
 
 
     useEffect(()=>{
