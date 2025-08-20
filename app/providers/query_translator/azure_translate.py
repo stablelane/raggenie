@@ -6,7 +6,7 @@ import uuid
 class AzureTranslate:
     
     def __init__(self):
-        self.endpoint = configs.azure_ts_enpoint
+        self.endpoint = configs.azure_ts_endpoint
         self.key = configs.azure_ts_secret_key
         self.region = configs.azure_ts_region
     

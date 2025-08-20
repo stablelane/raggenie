@@ -40,6 +40,7 @@ __prompt__ = Prompt(**{
         - Answer should not break the json format
         - If the answer cannot be found in the context, state that you don't have enough information to answer.
         - Present the answer in a human-readable Markdown format using markdown styling elements like table, list, paragraphs
+        - Always respond in paragraphs. If the user's question includes the keyword "list", use a markdown list in your reply.
         
         """
         },
@@ -49,7 +50,8 @@ __prompt__ = Prompt(**{
             Generate a JSON response in the following format without any formatting:
             {
                 "explanation": "<Explain how you determined the answer using the provided context>",
-                "general_message": "<Respond in Markdown format to the users question, using all available context, and ensure the reply is comprehensive, detailed, descriptive and well-structured. Strictly use the same language as the original user question.>"
+                "general_message": "<Respond in Markdown format to the users question, using all available context, and ensure that the reply is comprehensive, detailed, descriptive and well-structured. If a provided image URL is available in the context, embed it in the response using standard Markdown image syntax: ![Image](URL)> . Strictly use the same language as the original user question.>"
+                },
             }
             """
         },

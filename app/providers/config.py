@@ -46,7 +46,7 @@ class Configs(BaseSettings):
     azure_di_secret_key: str = os.getenv("AZURE_DI_SECRET_KEY", "")
     
     # Azure Translator
-    azure_ts_enpoint: str = os.getenv("AZURE_TS_ENDPOINT", "https://api.cognitive.microsofttranslator.com")
+    azure_ts_endpoint: str = os.getenv("AZURE_TS_ENDPOINT", "https://api.cognitive.microsofttranslator.com")
     azure_ts_secret_key: str = os.getenv("AZURE_TS_SECRET_KEY", "")
     azure_ts_region: str = os.getenv("AZURE_TS_REGION", "uaenorth")
 
