@@ -85,7 +85,7 @@ class PromptGenerator(AbstractHandler):
             )
         else:
             auto_context = "\n\n".join(
-                f"{cont.get('document', '')}\nURL: {cont.get('metadatas', {}).get('url', '')}".strip()
+                (f"{cont.get('document', '')}"+ (f"\nURL: {cont['metadatas']['url']}" if cont.get("metadatas", {}).get("url") else "")).strip()
                 for cont in rag.get("context", {}).get(intent, [])
             )
             auto_schema = "\n\n".join(schema["document"] for schema in rag.get("schema", []))

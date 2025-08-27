@@ -70,7 +70,7 @@ const Message = ({
                                     const originalSrc = props.src;
                                     const newSrc = modifyImageUrl(originalSrc);
                                     return (
-                                        <img {...props} src={newSrc} alt={props.alt || ""} />
+                                        <img {...props} style={{width : "200px"}} src={newSrc} alt={props.alt || ""} />
                                     );
                                     },
                                 }}

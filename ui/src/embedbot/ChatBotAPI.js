@@ -10,7 +10,7 @@ export const chatBotAPI = (contextId, configID, apiURL, message) => {
   }
 
   return PostService(
-    apiURL + `/query/query?contextId=${contextId}&configId=${configID}&envId=${0}`,
+    apiURL + `/query/query?contextId=${contextId}&configId=${configID}&envId=${0}&connectorName=`,
     { "content": message, "role":"user" }, {showLoader: false,allowAuthHeaders:true}, axiosConfig)
 };
 

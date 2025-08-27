@@ -51,7 +51,6 @@ __prompt__ = Prompt(**{
             {
                 "explanation": "<Explain how you determined the answer using the provided context>",
                 "general_message": "<Respond in Markdown format to the users question, using all available context, and ensure that the reply is comprehensive, detailed, descriptive and well-structured. If a provided image URL is available in the context, embed it in the response using standard Markdown image syntax: ![Image](URL)> . Strictly use the same language as the original user question.>"
-                },
             }
             """
         },
